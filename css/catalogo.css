@@ -77,21 +77,46 @@
 .suggest-item .sug-ref{flex:none;font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(255,255,255,.4);}
 .suggest-empty{padding:14px;color:rgba(255,255,255,.5);font-size:14px;text-align:center;}
 
-/* ---------- CHIPS DE CATEGORÍAS ---------- */
-.chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px;}
-.chip{
-  display:inline-flex;align-items:center;gap:8px;
-  background:#1b1f27;border:1px solid #2a2f3a;color:rgba(255,255,255,.7);
-  font:600 13px/1 'Barlow',sans-serif;letter-spacing:.02em;border-radius:999px;
-  padding:10px 16px;cursor:pointer;transition:all .25s;
+/* ---------- LAYOUT: MENÚ + RESULTADOS ---------- */
+.catalog-layout{display:grid;grid-template-columns:264px 1fr;gap:28px;align-items:start;margin-top:26px;}
+
+.catalog-sidebar{position:sticky;top:104px;}
+.sidebar-box{background:#1b1f27;border:1px solid #2a2f3a;border-radius:16px;padding:20px;overflow:hidden;}
+.sidebar-title{
+  font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.1em;color:#fff;margin:0 0 14px;padding-bottom:14px;border-bottom:1px solid #2a2f3a;
+  display:flex;align-items:center;gap:10px;
 }
-.chip .chip-count{font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(255,255,255,.4);transition:color .25s;}
-.chip:hover{color:#fff;border-color:#3a4150;transform:translateY(-2px);}
-.chip.active{
-  background:var(--orange);border-color:var(--orange);color:#131619;
-  box-shadow:0 10px 24px rgba(255,121,0,.35);
+.sidebar-title::before{content:'';width:18px;height:3px;background:var(--orange);display:inline-block;}
+.cat-menu{display:flex;flex-direction:column;gap:2px;max-height:520px;overflow-y:auto;padding-right:4px;}
+.cat-menu::-webkit-scrollbar{width:6px;}
+.cat-menu::-webkit-scrollbar-thumb{background:#2a2f3a;border-radius:99px;}
+.cat-menu-item{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;text-align:left;
+  background:transparent;border:0;color:rgba(255,255,255,.7);cursor:pointer;
+  font:500 14px/1.35 'Barlow',sans-serif;padding:10px 12px;border-radius:10px;
+  transition:color .2s,background .2s,transform .2s;
 }
-.chip.active .chip-count{color:rgba(19,22,25,.6);}
+.cat-menu-item span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.cat-menu-count{
+  flex:none;font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(255,255,255,.35);
+  background:rgba(255,255,255,.06);border-radius:99px;padding:3px 8px;transition:all .2s;
+}
+.cat-menu-item:hover{color:#fff;background:rgba(255,255,255,.05);transform:translateX(2px);}
+.cat-menu-item.active{
+  color:#131619;background:var(--orange);font-weight:600;
+  box-shadow:0 8px 20px rgba(255,121,0,.3);
+}
+.cat-menu-item.active .cat-menu-count{color:rgba(19,22,25,.65);background:rgba(19,22,25,.1);}
+
+.sidebar-wa{
+  display:flex;align-items:center;gap:12px;margin-top:14px;padding:14px 16px;
+  background:rgba(37,211,102,.09);border:1px solid rgba(37,211,102,.22);border-radius:14px;
+  color:#fff;font-size:13.5px;font-weight:600;text-decoration:none;
+  transition:background .25s,transform .25s;
+}
+.sidebar-wa svg{width:20px;height:20px;color:#25d366;flex:none;}
+.sidebar-wa:hover{background:rgba(37,211,102,.16);transform:translateY(-2px);}
 
 /* ---------- ENCABEZADO DE RESULTADOS ---------- */
 .catalog-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:34px 0 22px;}
@@ -121,6 +146,11 @@
 }
 .product-body{flex:1;}
 .product-body h4{color:#fff;font-size:18px;line-height:1.3;margin:0 0 10px;}
+.product-info{color:rgba(255,255,255,.58);font-size:14px;line-height:1.5;margin:0 0 18px;}
+.product-body h4 mark.hl,.product-body mark.hl{
+  background:rgba(255,121,0,.28);color:#ffd9c2;border-radius:4px;
+  padding:0 2px;box-shadow:0 0 0 1px rgba(255,121,0,.35);
+}
 .product-meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:14px;}
 .product-meta span{font-size:13px;color:rgba(255,255,255,.55);}
 .product-meta .product-ref{font-size:11px;color:rgba(255,255,255,.35);letter-spacing:.08em;}
@@ -137,13 +167,15 @@
 
 /* Resaltado del producto al buscarlo */
 .product-card.resaltado{
-  animation:resaltar 2.6s ease both;
+  animation:resaltar 2.8s var(--ease2) both;
   z-index:5;
 }
 @keyframes resaltar{
-  0%{box-shadow:0 0 0 0 rgba(255,196,0,.65);}
-  20%{box-shadow:0 0 0 4px rgba(255,196,0,.65),0 0 40px rgba(255,196,0,.5);transform:translateY(-5px);}
-  100%{box-shadow:0 0 0 0 rgba(255,196,0,0);}
+  0%{box-shadow:0 0 0 0 rgba(255,196,0,0);border-color:#2a2f3a;transform:translateY(0);}
+  12%{box-shadow:0 0 0 5px rgba(255,196,0,.6),0 0 46px rgba(255,121,0,.5);border-color:var(--orange);transform:translateY(-6px) scale(1.015);}
+  30%{box-shadow:0 0 0 5px rgba(255,196,0,.6),0 0 46px rgba(255,121,0,.5);border-color:var(--orange);transform:translateY(-4px) scale(1.01);}
+  55%{box-shadow:0 0 0 3px rgba(255,196,0,.4),0 0 24px rgba(255,121,0,.25);border-color:rgba(255,196,0,.6);transform:translateY(0) scale(1);}
+  100%{box-shadow:0 0 0 0 rgba(255,196,0,0);border-color:#2a2f3a;transform:translateY(0);}
 }
 
 /* ---------- SIN RESULTADOS ---------- */
@@ -170,10 +202,20 @@
 @media(max-width:1080px){
   .filter-bar{grid-template-columns:1fr 1fr;margin-top:-70px;}
   .search-field{grid-column:1/-1;}
+  .catalog-layout{grid-template-columns:1fr;gap:22px;}
+  .catalog-sidebar{position:static;}
+  .cat-menu{max-height:none;display:grid;grid-template-columns:repeat(2,1fr);gap:2px;}
+  .sidebar-wa{display:none;}
 }
 @media(max-width:640px){
   .cat-hero{padding:130px 0 170px;}
   .filter-bar{grid-template-columns:1fr;margin-top:-56px;}
   .cat-cta-inner{padding:36px 24px;}
   .product-grid{grid-template-columns:1fr;}
+  .cat-menu{grid-template-columns:1fr;}
+  .sidebar-box{padding:16px;}
 }
+
+/* ---------- APARICIÓN DE TARJETAS ---------- */
+.product-card{animation:cardIn .55s var(--ease2) both;}
+@keyframes cardIn{from{opacity:0;transform:translateY(20px) scale(.98);}to{opacity:1;transform:translateY(0) scale(1);}}

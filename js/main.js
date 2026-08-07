@@ -1,3 +1,35 @@
+/* ============ VOLVER ARRIBA ============ */
+const floatersEl = document.querySelector('.floaters');
+if(floatersEl){
+  const topBtn = document.createElement('a');
+  topBtn.className = 'fab fab-top';
+  topBtn.href = '#';
+  topBtn.setAttribute('aria-label', 'Volver arriba');
+  topBtn.innerHTML = '<svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19V5M5 12l7-7 7 7"/></svg>';
+  floatersEl.appendChild(topBtn);
+  topBtn.addEventListener('click', (e)=>{ e.preventDefault(); window.scrollTo({top:0,behavior:'smooth'}); });
+  const toggleTop = ()=> topBtn.classList.toggle('show', window.scrollY > 600);
+  window.addEventListener('scroll', toggleTop, {passive:true});
+  toggleTop();
+}
+
+/* ============ PARALLAX FOTO DEL HERO ============ */
+const heroStack = document.querySelector('.hero-photo-stack');
+if(heroStack && window.matchMedia('(hover:hover)').matches){
+  let ticking = false;
+  window.addEventListener('scroll', ()=>{
+    if(!ticking){
+      requestAnimationFrame(()=>{
+        const y = window.scrollY;
+        if(y < window.innerHeight) heroStack.style.transform = 'translateY(' + (y * 0.06) + 'px)';
+        else heroStack.style.transform = '';
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, {passive:true});
+}
+
 /* ============ PROGRESS BAR ============ */
 const progressEl = document.getElementById('progress');
 function updateProgress(){
@@ -70,17 +102,6 @@ if(hero && spotlight && window.matchMedia('(hover:hover)').matches){
     spotlight.style.setProperty('--my', my);
   });
 }
-
-/* ============ BOTONES MAGNÉTICOS ============ */
-document.querySelectorAll('.magnetic').forEach(btn=>{
-  btn.addEventListener('mousemove', (e)=>{
-    const r = btn.getBoundingClientRect();
-    const x = e.clientX - r.left - r.width/2;
-    const y = e.clientY - r.top - r.height/2;
-    btn.style.transform = `translate(${x*0.18}px, ${y*0.35}px)`;
-  });
-  btn.addEventListener('mouseleave', ()=>{ btn.style.transform = ''; });
-});
 
 /* ============ TILT FOTO DEL HERO ============ */
 const heroPhoto = document.querySelector('.hero-photo');
