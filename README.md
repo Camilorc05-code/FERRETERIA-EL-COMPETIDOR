@@ -52,5 +52,5 @@ Sitio web oficial de **Ferretería El Competidor**, ferretería y distribución 
 
 ## 🚀 Despliegue
 
-Publicado en GitHub Pages:
-`https://camilorc05-code.github.io/FERRETERIA-EL-COMPETIDOR/`
+Sitio publicado en:
+`https://ferreteriaelcompetidorpza.com/`
