@@ -435,6 +435,7 @@ body.pt-load .page-trans::after,body.pt-out .page-trans::after{opacity:1;}
   .hero-fx{display:none;}
   .hero-particles{display:none;}
   .hero-fusion{min-height:auto;}
+  .hero-photo img{object-position:30% center;}
   body::before{display:none;}
   .nav{will-change:auto;}
 }
