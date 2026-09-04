@@ -1,0 +1,83 @@
+==========================================================
+INSTRUCCIONES DE PUBLICACION
+Sitio web: Ferreteria El Competidor
+Dominio: https://ferreteriaelcompetidorpza.com
+Hosting: Latinoamerica Hosting
+==========================================================
+
+El sitio esta completo y listo para publicar. Todo es ESTATICO
+(no necesita base de datos ni backend). Solo hay que subir los
+archivos al hosting y apuntar el dominio.
+
+----------------------------------------------------------
+1. QUE SUBIR
+----------------------------------------------------------
+Subir a la carpeta raiz publica del hosting (htdocs o public_html):
+
+- Las 5 paginas HTML:
+    index.html
+    catalogo.html
+    nosotros.html
+    proyectos.html
+    404.html
+
+- Las carpetas completas:
+    css/            (estilos)
+    js/             (logica del sitio)
+    assets/         (todas las imagenes e iconos)
+
+- Archivos de raiz:
+    robots.txt
+    sitemap.xml
+
+NO SUBIR (NO son necesarios):
+    .git/
+    node_modules/
+    .gitignore
+    package.json
+    package-lock.json
+    README.md (opcional)
+
+----------------------------------------------------------
+2. MUY IMPORTANTE: RAIZ DEL DOMINIO
+----------------------------------------------------------
+El sitio debe quedar en la RAIZ del dominio, NO en una subcarpeta.
+
+Correcto:   https://ferreteriaelcompetidorpza.com/
+Incorrecto: https://ferreteriaelcompetidorpza.com/ferreteria/
+
+Las URLs de SEO (canonical, Open Graph, JSON-LD, sitemap) ya
+apuntan a la raiz del dominio. Si el sitio se sube a una
+subcarpeta, el SEO quedaria incorrecto.
+
+----------------------------------------------------------
+3. CONFIGURAR EL DOMINIO
+----------------------------------------------------------
+- Apuntar el dominio ferreteriaelcompetidorpza.com al hosting
+  (registro A con la IP del hosting, o CNAME si aplica).
+- Activar SSL/HTTPS (certificado) para que el sitio cargue
+  como https://ferreteriaelcompetidorpza.com
+
+----------------------------------------------------------
+4. VERIFICAR QUE QUEDO BIEN
+----------------------------------------------------------
+Despues de publicar, comprobar que:
+
+- https://ferreteriaelcompetidorpza.com/ cargue la portada
+- Las 5 paginas naveguen bien (menu y enlaces)
+- Las imagenes se carguen (catalogo, proyectos, logos, carousel)
+- El mapa de contacto se muestre
+- Los botones de WhatsApp y llamar funcionen
+- https://ferreteriaelcompetidorpza.com/robots.txt responda 200
+
+----------------------------------------------------------
+5. NOTAS EXTRA
+----------------------------------------------------------
+- El sitio es responsive: se ve bien en movil y en escritorio.
+- La pagina ya esta optimizada para SEO local.
+  Recomendable despues de subir:
+    + Registrar en Google Search Console (enviar sitemap.xml)
+    + Crear Google Business Profile del local
+
+Si hay cualquier duda, contactar al responsable del sitio.
+==========================================================
