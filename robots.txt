@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://camilorc05-code.github.io/FERRETERIA-EL-COMPETIDOR/sitemap.xml
