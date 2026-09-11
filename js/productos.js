@@ -64,7 +64,7 @@ const PRODUCTOS = [
   { categoria: "MOTORES", nombre: "Generador eléctrico", desc: "Energía de respaldo para obra y casa.", img: "assets/img/CATEGORIAS/motores/generadores-electricos.webp" },
   { categoria: "MOTORES", nombre: "Electrobombas", desc: "Bombas eléctricas para agua.", img: "assets/img/CATEGORIAS/motores/electro-bombas.webp" },
   { categoria: "MOTORES", nombre: "Hidroflow", desc: "Descarga y accesorios de presión.", img: "assets/img/CATEGORIAS/motores/hidroflow.webp" },
-  { categoria: "MOTORES", nombre: "Bomba sumergible", desc: "Bomba para pozos y tanques." },
+  { categoria: "MOTORES", nombre: "Bomba sumergible", desc: "Bomba para pozos y tanques.", img: "assets/img/CATEGORIAS/motores/bomba-sumergible.webp" },
   { categoria: "MOTORES", nombre: "Motobombas", desc: "Motobombas portátiles para riego.", img: "assets/img/CATEGORIAS/motores/moto-bombas.webp" },
   { categoria: "MOTORES", nombre: "Hidrolavadoras", desc: "Limpieza de equipos a alta presión.", img: "assets/img/CATEGORIAS/motores/hidrolavadoras.webp" },
   { categoria: "MOTORES", nombre: "Compresores", desc: "Aire comprimido para taller y obra.", img: "assets/img/CATEGORIAS/motores/compresores.webp" },
@@ -170,10 +170,10 @@ const PRODUCTOS = [
   { categoria: "MANGUERAS", nombre: "Manguera peletizada", desc: "Manguera peletizada para riego.", img: "assets/img/CATEGORIAS/mangueras/manguera-peletizada.webp" },
   { categoria: "MANGUERAS", nombre: "Manguera de cristal", desc: "Manguera transparente de cristal.", img: "assets/img/CATEGORIAS/mangueras/manguera-cristal.webp" },
   { categoria: "MANGUERAS", nombre: "Manguera de gas", desc: "Manguera para gas certificada.", img: "assets/img/CATEGORIAS/mangueras/manguera-gas.webp" },
-  { categoria: "MANGUERAS", nombre: "Manguera alta presión", desc: "Manguera de alta presión." },
-  { categoria: "MANGUERAS", nombre: "Manguera anillada", desc: "Manguera anillada reforzada." },
-  { categoria: "MANGUERAS", nombre: "Manguera jardín", desc: "Manguera de jardín." },
-  { categoria: "MANGUERAS", nombre: "Manguera riegos", desc: "Manguera de riego agrícola." },
+  { categoria: "MANGUERAS", nombre: "Manguera alta presión", desc: "Manguera de alta presión.", img: "assets/img/CATEGORIAS/mangueras/manguera-alta-presion.webp" },
+  { categoria: "MANGUERAS", nombre: "Manguera anillada", desc: "Manguera anillada reforzada.", img: "assets/img/CATEGORIAS/mangueras/manguera-anillada.webp" },
+  { categoria: "MANGUERAS", nombre: "Manguera jardín", desc: "Manguera de jardín.", img: "assets/img/CATEGORIAS/mangueras/manguera-jardin.webp" },
+  { categoria: "MANGUERAS", nombre: "Manguera riegos", desc: "Manguera de riego agrícola.", img: "assets/img/CATEGORIAS/mangueras/manguera-riegos.webp" },
 
   /* tanques */
   { categoria: "TANQUES", nombre: "Tanques alto", desc: "Tanques altos para agua.", img: "assets/img/CATEGORIAS/tanques/tanque-alto.webp" },
@@ -203,18 +203,18 @@ const PRODUCTOS = [
   { categoria: "BAÑOS Y COCINAS", nombre: "Orinales", desc: "Orinales para baño.", img: "assets/img/CATEGORIAS/banos-y-cocinas/sanitarios-y-lavamanos.webp" },
   { categoria: "BAÑOS Y COCINAS", nombre: "Lavamanos", desc: "Lavamanos de baño.", img: "assets/img/CATEGORIAS/banos-y-cocinas/sanitarios-y-lavamanos.webp" },
   { categoria: "BAÑOS Y COCINAS", nombre: "Boquillas", desc: "Boquillas y accesorios.", img: "assets/img/CATEGORIAS/banos-y-cocinas/boquilla.webp" },
-  { categoria: "BAÑOS Y COCINAS", nombre: "Pegantes baldosas", desc: "Pegante para baldosas." },
-  { categoria: "BAÑOS Y COCINAS", nombre: "Duchas", desc: "Duchas y regaderas." },
-  { categoria: "BAÑOS Y COCINAS", nombre: "Registros", desc: "Registros de agua y accesorios." },
-  { categoria: "BAÑOS Y COCINAS", nombre: "Accesorios baños", desc: "Accesorios de baño y cocina." },
+  { categoria: "BAÑOS Y COCINAS", nombre: "Pegantes baldosas", desc: "Pegante para baldosas.", img: "assets/img/CATEGORIAS/banos-y-cocinas/pegante-baldosas.webp" },
+  { categoria: "BAÑOS Y COCINAS", nombre: "Duchas", desc: "Duchas y regaderas.", img: "assets/img/CATEGORIAS/banos-y-cocinas/duchas.webp" },
+  { categoria: "BAÑOS Y COCINAS", nombre: "Registros", desc: "Registros de agua y accesorios.", img: "assets/img/CATEGORIAS/banos-y-cocinas/registros.webp" },
+  { categoria: "BAÑOS Y COCINAS", nombre: "Accesorios baños", desc: "Accesorios de baño y cocina.", img: "assets/img/CATEGORIAS/banos-y-cocinas/accesorios-banos.webp" },
   { categoria: "BAÑOS Y COCINAS", nombre: "Lavaplatos", desc: "Lavaplatos para cocina.", img: "assets/img/CATEGORIAS/banos-y-cocinas/lavaplatos.webp" },
 
   /* químicos */
-  { categoria: "QUÍMICOS", nombre: "Soda cáustica", desc: "Soda cáustica de limpieza." },
+  { categoria: "QUÍMICOS", nombre: "Soda cáustica", desc: "Soda cáustica de limpieza.", img: "assets/img/CATEGORIAS/quimicos/soda-caustica.webp" },
   { categoria: "QUÍMICOS", nombre: "Minerales", desc: "Minerales de uso doméstico.", img: "assets/img/CATEGORIAS/materiales-de-construccion/minerales.webp" },
   { categoria: "QUÍMICOS", nombre: "Destapa cañerías", desc: "Destapador de cañerías.", img: "assets/img/CATEGORIAS/quimicos/destapacanerias.webp" },
   { categoria: "QUÍMICOS", nombre: "Ácido muriático", desc: "Ácido muriático de limpieza.", img: "assets/img/CATEGORIAS/quimicos/acido-muriatico.webp" },
-  { categoria: "QUÍMICOS", nombre: "Disolvente pintura", desc: "Disolvente para pintura." },
+  { categoria: "QUÍMICOS", nombre: "Disolvente pintura", desc: "Disolvente para pintura.", img: "assets/img/CATEGORIAS/quimicos/disolvente-pintura.webp" },
   { categoria: "QUÍMICOS", nombre: "Productos piscinas", desc: "Químicos para piscinas.", img: "assets/img/CATEGORIAS/quimicos/producto-piscina.webp" },
 
   /* plásticos y mallas */
