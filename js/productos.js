@@ -189,7 +189,7 @@ const PRODUCTOS = [
   { categoria: "HERRAMIENTAS MANUALES", nombre: "Flexómetros", desc: "Flexómetros y cintas métricas.", img: "assets/img/CATEGORIAS/herramientas-manuales/flexometros.webp" },
   { categoria: "HERRAMIENTAS MANUALES", nombre: "Pinzas", desc: "Pinzas de precisión.", img: "assets/img/CATEGORIAS/herramientas-manuales/llaves-y-pinzas.webp" },
   { categoria: "HERRAMIENTAS MANUALES", nombre: "Destornilladores", desc: "Destornilladores de varios tipos.", img: "assets/img/CATEGORIAS/herramientas-manuales/destornilladoress.webp" },
-  { categoria: "HERRAMIENTAS MANUALES", nombre: "Tijeras", desc: "Tijeras de todo uso." },
+  { categoria: "HERRAMIENTAS MANUALES", nombre: "Tijeras", desc: "Tijeras de todo uso.", img: "assets/img/CATEGORIAS/herramientas-manuales/tijeras.webp" },
   { categoria: "HERRAMIENTAS MANUALES", nombre: "Bisturí", desc: "Bisturí de precisión.", img: "assets/img/CATEGORIAS/herramientas-manuales/bisturi.webp" },
   { categoria: "HERRAMIENTAS MANUALES", nombre: "Tarrajas", desc: "Tarrajas para roscar tubería.", img: "assets/img/CATEGORIAS/herramientas-manuales/machuelos-y-tarrajas.webp" },
   { categoria: "HERRAMIENTAS MANUALES", nombre: "Machuelos", desc: "Machuelos para roscado.", img: "assets/img/CATEGORIAS/herramientas-manuales/machuelos-y-tarrajas.webp" },
