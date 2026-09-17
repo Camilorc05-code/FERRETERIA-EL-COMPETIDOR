@@ -329,7 +329,7 @@ header.scrolled .nav{height:64px;}
 .contact{background:var(--charcoal);padding:clamp(64px,8vw,120px) 0;position:relative;overflow:hidden;}
 .contact::before{content:'';position:absolute;bottom:-140px;right:-100px;width:560px;height:560px;background:radial-gradient(circle,rgba(255,90,31,.14),transparent 65%);pointer-events:none;}
 .contact-grid{gap:60px;}
-.contact h2{font-size:clamp(26px,3vw,36px);letter-spacing:.01em;}
+.contact h2{font-size:clamp(26px,3vw,36px);letter-spacing:.01em;line-height:1.3;}
 .info-row{border:1px solid var(--line);background:rgba(255,255,255,.025);padding:18px 20px;border-left:3px solid var(--orange);transition:transform .3s var(--ease2),background .3s;}
 .info-row:hover{transform:translateX(6px);background:rgba(255,90,31,.06);}
 .info-row svg{width:20px;height:20px;}
