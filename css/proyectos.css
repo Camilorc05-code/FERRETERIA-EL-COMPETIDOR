@@ -45,6 +45,9 @@
   .proj-grid{grid-template-columns:repeat(2,1fr);}
   .proj-cta-inner{padding:40px 28px;}
 }
+@media(min-width:1400px){
+  .proj-grid{grid-template-columns:repeat(4,1fr);gap:24px;}
+}
 @media(max-width:640px){
   .proj-hero{padding:20px 0 80px;}
   .proj-hero h1{font-size:clamp(32px,7vw,46px);}

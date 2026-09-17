@@ -485,3 +485,24 @@ body.pt-out .page-trans{opacity:1;visibility:visible;transition:opacity .16s eas
   .plaque-num{font-size:30px;}
   .plaque-label{font-size:9px;max-width:120px;}
 }
+
+/* Monitores grandes: aprovechar el ancho disponible */
+@media(min-width:1400px){
+  .wrap{max-width:1560px;padding:0 40px;}
+  .hero-fusion .hero-inner{max-width:none;padding:0 40px;gap:clamp(36px,5vw,72px);}
+  .hero-copy{max-width:700px;}
+  .hero-title{font-size:clamp(52px,5.6vw,92px);}
+  .stats-grid{gap:24px;}
+  .about-grid{gap:80px;}
+  .mv{gap:20px;}
+  .tl-track{gap:28px;}
+  .test-grid{gap:28px;}
+  .contact-grid{gap:70px;}
+  .footer-grid{gap:48px;}
+}
+@media(min-width:1700px){
+  .wrap{max-width:1740px;}
+  .hero-fusion .hero-inner{padding:0 56px;}
+  .about-grid{gap:100px;}
+  .contact-grid{gap:90px;}
+}
