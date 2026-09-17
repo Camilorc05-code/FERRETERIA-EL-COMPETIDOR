@@ -81,6 +81,7 @@
 
 /* menú lateral y resultados */
 .catalog-layout{display:grid;grid-template-columns:264px 1fr;gap:28px;align-items:start;margin-top:26px;}
+.catalog-layout>*{min-width:0;}
 
 .catalog-sidebar{position:sticky;top:104px;}
 .sidebar-box{background:#fff;border:1px solid #e2e5ea;border-radius:16px;padding:20px;overflow:hidden;}
@@ -153,7 +154,7 @@
 .product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px;}
 
 .product-card{
-  position:relative;display:flex;flex-direction:column;
+  position:relative;display:flex;flex-direction:column;min-width:0;
   background:#fff;
   border:1px solid #e2e5ea;border-radius:16px;padding:20px;
   transition:transform .3s cubic-bezier(.2,.7,.3,1),border-color .3s,box-shadow .3s;
