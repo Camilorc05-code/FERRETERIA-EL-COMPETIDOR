@@ -99,12 +99,13 @@
 
   function filtrar(){
     const q = norm(query);
+    /* categoría y texto se combinan: la categoría elegida manda siempre, así que
+       lo que se ve en pantalla nunca contradice el chip/selector que está activo */
     let lista = PRODUCTOS.filter(p=>{
+      if(categoria && p.categoria !== categoria) return false;
       if(q){
         const hay = norm(p.nombre + ' ' + p.categoria);
         if(!hay.includes(q)) return false;
-      } else if(categoria && p.categoria !== categoria){
-        return false;
       }
       return true;
     });
@@ -203,6 +204,17 @@
     });
   }
 
+  /* Orden de las sugerencias: primero lo que empieza por la palabra buscada,
+     después lo que la contiene; a igualdad, el nombre más corto (más exacto).
+     Sin esto "tan" ofrecía "Marco ventana" antes que "Tanques alto". */
+  function rangoSugerencia(nombre, q){
+    const i = nombre.indexOf(q);
+    if(i < 0) return -1;
+    if(i === 0) return 0;
+    if(nombre.split(' ').some(palabra => palabra.startsWith(q))) return 1;
+    return 2;
+  }
+
   function mostrarSugerencias(){
     const q = norm(query);
     selIdx = -1;
@@ -212,18 +224,24 @@
       return;
     }
     const matches = [];
-    for(let i=0;i<PRODUCTOS.length && matches.length<8;i++){
+    for(let i=0;i<PRODUCTOS.length;i++){
       const p = PRODUCTOS[i];
-      const hay = norm(p.nombre);
-      if(hay.includes(q)) matches.push({p:p, i:i});
+      const nombre = norm(p.nombre);
+      const rango = rangoSugerencia(nombre, q);
+      if(rango < 0) continue;
+      matches.push({p:p, i:i, rango:rango, largo:nombre.length});
     }
-    if(matches.length === 0){
+    matches.sort((a,b)=> a.rango - b.rango
+      || a.largo - b.largo
+      || a.p.nombre.localeCompare(b.p.nombre, 'es'));
+    const top = matches.slice(0, 8);
+    if(top.length === 0){
       suggestBox.innerHTML = '<div class="suggest-empty">Sin coincidencias directas</div>';
       suggestBox.hidden = false;
       return;
     }
-    sugMatches = matches;
-    suggestBox.innerHTML = matches.map(m=>(
+    sugMatches = top;
+    suggestBox.innerHTML = top.map(m=>(
       '<button type="button" class="suggest-item" data-index="' + m.i + '">' +
         '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>' +
         '<span class="sug-name">' + m.p.nombre + '</span>' +
@@ -233,16 +251,24 @@
     suggestBox.hidden = false;
   }
 
-  suggestBox.addEventListener('click', e=>{
-    const item = e.target.closest('.suggest-item');
-    if(!item) return;
-    const idx = parseInt(item.dataset.index,10);
+  /* Al elegir una sugerencia con una categoría activa, el filtro se ajusta a la del
+     producto: si no, la tarjeta elegida quedaría fuera del filtro y no se vería.
+     Sin categoría activa ("todas") se deja el filtro como está. */
+  function elegirSugerencia(idx){
     const p = PRODUCTOS[idx];
     query = p.nombre;
     targetIndex = idx;
     inputBuscar.value = p.nombre;
     suggestBox.hidden = true;
+    selIdx = -1;
+    if(categoria && p.categoria !== categoria) setCategoria(p.categoria);
     render(true);
+  }
+
+  suggestBox.addEventListener('click', e=>{
+    const item = e.target.closest('.suggest-item');
+    if(!item) return;
+    elegirSugerencia(parseInt(item.dataset.index,10));
   });
 
   document.addEventListener('click', e=>{
@@ -272,13 +298,7 @@
     if(e.key === 'Enter'){
       e.preventDefault();
       if(!suggestBox.hidden && selIdx >= 0 && selIdx < sugMatches.length){
-        const p = sugMatches[selIdx].p;
-        query = p.nombre;
-        targetIndex = sugMatches[selIdx].i;
-        inputBuscar.value = p.nombre;
-        suggestBox.hidden = true;
-        selIdx = -1;
-        render(true);
+        elegirSugerencia(sugMatches[selIdx].i);
       } else {
         suggestBox.hidden = true;
         selIdx = -1;
