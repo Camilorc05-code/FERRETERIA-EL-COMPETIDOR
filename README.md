@@ -6,7 +6,7 @@ Sitio web oficial de **Ferretería El Competidor**, ferretería y distribución 
 
 - **HTML5** / **CSS3** (diseño responsive, mobile-first)
 - **JavaScript** (catálogo dinámico, filtros por categoría)
-- **PWA manifest** (`manifest.webmanifest`) con soporte de favicons e íconos
+- Favicons e íconos para móvil y escritorio
 - Sitio 100% estático: sin base de datos ni backend
 - Desplegado en **Latinoamerica Hosting** (dominio propio)
 
@@ -33,7 +33,6 @@ Sitio web oficial de **Ferretería El Competidor**, ferretería y distribución 
 ├── assets/
 │   ├── img/      → imágenes, categorías, proyectos, logos de marcas (.webp) + og-image.png
 │   └── icons/    → favicons e íconos
-├── manifest.webmanifest
 ├── sitemap.xml
 └── robots.txt
 ```
