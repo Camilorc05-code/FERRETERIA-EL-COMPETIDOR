@@ -222,9 +222,7 @@ footer::before{content:'';display:block;height:3px;background:linear-gradient(90
 .socials a{border-color:rgba(255,255,255,.14);}
 
 /* botones flotantes */
-.fab-top{background:var(--steel-navy-2);border:1px solid var(--line-2);box-shadow:0 8px 22px rgba(0,0,0,.4);opacity:0;pointer-events:none;transform:translateY(14px);transition:opacity .35s var(--ease),transform .35s var(--ease),background .3s;}
-.fab-top.show{opacity:1;pointer-events:auto;transform:translateY(0);}
-.fab-top:hover{background:var(--orange);border-color:var(--orange);}
+/* el botón "volver arriba" (.fab-top) vive en styles.css */
 
 /* transición entre páginas */
 .page-trans{background:linear-gradient(160deg,rgba(14,22,30,.55),rgba(9,13,18,.45));backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}

@@ -28,6 +28,11 @@
       a.addEventListener('click', (e)=>{
         if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||e.button!==0) return;
         e.preventDefault();
+        /* quitamos el ancla anterior de la URL: si se quedaba, al recargar
+           el navegador volvía a saltar a esa sección */
+        if(location.hash && location.hash !== '#inicio'){
+          try{ history.replaceState(null, '', location.pathname + location.search); }catch(err){}
+        }
         window.scrollTo({top:0, behavior:'smooth'});
       });
       return;
@@ -45,17 +50,73 @@
 /* entrada de la página */
 (function(){
   if('scrollRestoration' in history){ history.scrollRestoration = 'manual'; }
+  /* La cabecera es sticky y se superpone al destino de las anclas. Medimos su alto
+     real (84 px en escritorio, 66 px en móvil) y lo publicamos como --anchor-offset,
+     que es el mismo margen que aplica el salto nativo del navegador: así el clic en
+     el menú y el salto al cargar la página caen en el mismo sitio. */
+  const docEl = document.documentElement;
+  const cabecera = document.getElementById('site-header');
+  const margenAncla = ()=>{
+    const h = cabecera ? cabecera.offsetHeight : 0;
+    docEl.style.setProperty('--anchor-offset', h + 'px');
+    return h;
+  };
+
   /* Si venimos con #inicio (top de página), quítalo para abrir desde arriba */
   if(location.hash === '#inicio'){
     try{ history.replaceState(null, '', location.pathname + location.search); }catch(e){}
   }
-  /* posicionar al tope de forma instantánea: evita el scroll suave que se percibe como zoom
-     al abrir la página o al retroceder en el móvil */
-  const docEl = document.documentElement;
-  const prev = docEl.style.scrollBehavior;
-  docEl.style.scrollBehavior = 'auto';
-  window.scrollTo(0, 0);
-  docEl.style.scrollBehavior = prev;
+
+  let destino = null;
+  if(location.hash && location.hash !== '#inicio'){
+    try{ destino = document.querySelector(location.hash); }catch(e){ destino = null; }
+  }
+
+  /* Con scroll-behavior:smooth el salto del navegador al ancla compite con el scroll
+     suave y en una recarga (F5) directamente no ocurre: la página se queda arriba.
+     Por eso el scroll lo hacemos nosotros, de forma instantánea, en vez de confiar
+     en el navegador. Sin ancla, al tope absoluto: se evita el "zoom" al abrir. */
+  const saltarA = y=>{
+    const prev = docEl.style.scrollBehavior;
+    docEl.style.scrollBehavior = 'auto';
+    window.scrollTo(0, y);
+    docEl.style.scrollBehavior = prev;
+  };
+  const posicionAncla = ()=>{
+    const y = destino.getBoundingClientRect().top + window.scrollY - margenAncla();
+    return Math.max(0, Math.min(y, docEl.scrollHeight - window.innerHeight));
+  };
+
+  if(destino){
+    const y = posicionAncla();
+    saltarA(y);
+    /* Las fuentes y las imágenes terminan de cargar después y pueden mover el destino.
+       Reajustamos una única vez, y solo si el visitante no ha movido la página:
+       si ya hizo scroll (o el navegador saltó por su cuenta) se respeta su posición. */
+    let intacto = true;
+    const marcar = ()=>{ intacto = false; };
+    window.addEventListener('wheel', marcar, {passive:true, once:true});
+    window.addEventListener('touchstart', marcar, {passive:true, once:true});
+    window.addEventListener('keydown', marcar, {once:true});
+    window.addEventListener('pointerdown', marcar, {once:true});
+    window.addEventListener('load', ()=>{
+      if(!intacto || Math.abs(window.scrollY - y) > 2) return;
+      const y2 = posicionAncla();
+      if(Math.abs(y2 - y) > 2) saltarA(y2);
+    });
+  } else {
+    margenAncla();
+    saltarA(0);
+  }
+
+  /* al cambiar el tamaño la cabecera cambia de alto: el margen de las anclas se
+     vuelve a medir para que los saltos sigan cayendo bajo ella */
+  let margenRaf = null;
+  window.addEventListener('resize', ()=>{
+    if(margenRaf) return;
+    margenRaf = requestAnimationFrame(()=>{ margenRaf = null; margenAncla(); });
+  }, {passive:true});
+
   const pt = document.getElementById('pageTrans');
   if(!pt) return;
   document.body.classList.add('pt-load');
@@ -138,8 +199,13 @@ if(header){
 const burger = document.getElementById('burger');
 const mp = document.getElementById('mp');
 const scrim = document.getElementById('scrim');
-function closeMenu(){burger.classList.remove('open');mp.classList.remove('open');scrim.classList.remove('open');}
-burger.addEventListener('click', ()=>{ burger.classList.toggle('open');mp.classList.toggle('open');scrim.classList.toggle('open'); });
+function closeMenu(){burger.classList.remove('open');mp.classList.remove('open');scrim.classList.remove('open');burger.setAttribute('aria-expanded','false');}
+burger.addEventListener('click', ()=>{
+  const open = mp.classList.toggle('open');
+  burger.classList.toggle('open', open);
+  scrim.classList.toggle('open', open);
+  burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+});
 scrim.addEventListener('click', closeMenu);
 mp.querySelectorAll('a').forEach(a=>a.addEventListener('click', closeMenu));
 

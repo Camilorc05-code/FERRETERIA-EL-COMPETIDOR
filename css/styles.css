@@ -10,6 +10,8 @@
   --orange-dark:#d6440f;
   --orange-glow:rgba(255,90,31,.35);
   --yellow:#ffc400;
+  --line:rgba(255,255,255,.09);
+  --line-2:rgba(255,255,255,.16);
   --radius:3px;
   --ease:cubic-bezier(.16,.84,.44,1);
   --ease2:cubic-bezier(.22,1,.36,1);
@@ -28,6 +30,12 @@ ul{list-style:none;}
 .wrap{max-width:1240px;margin:0 auto;padding:0 24px;}
 section{position:relative;}
 ::selection{background:var(--orange);color:#fff;}
+
+/* La cabecera es sticky: las anclas deben quedar por debajo de ella, no tapadas.
+   --anchor-offset lo fija js/main.js con el alto real de la cabecera (82/84 px en
+   escritorio, 66/68 px en móvil) para que el clic en el menú y el salto al abrir
+   la página caigan en el mismo sitio. */
+#inicio,#productos,#nosotros,#contacto{scroll-margin-top:var(--anchor-offset,86px);}
 
 /* Foco visible accesible: anillo naranja consistente al navegar con teclado */
 :focus-visible{
@@ -209,7 +217,9 @@ header.scrolled .nav{height:66px;}
 .team-photo.has-photo img{position:relative;width:100%;height:auto;object-fit:cover;object-position:center;display:block;border-radius:6px;border:1px solid #23323c;box-shadow:0 16px 40px rgba(0,0,0,.35);transition:box-shadow .5s var(--ease2);z-index:0;}
 .team-photo.has-photo:hover img{box-shadow:0 22px 50px rgba(0,0,0,.50);}
 .brand-plate{display:flex;align-items:center;justify-content:center;padding:34px;background:#0d161d;border:1px solid #23323c;border-radius:8px;}
-.brand-plate img{max-width:210px;filter:drop-shadow(0 8px 24px rgba(0,0,0,.5));transition:transform .5s var(--ease);}
+/* height:auto es necesario para que el alto se calcule por la proporción de la
+   imagen y no por el atributo height (que reserva el espacio antes de cargar) */
+.brand-plate img{max-width:210px;height:auto;filter:drop-shadow(0 8px 24px rgba(0,0,0,.5));transition:transform .5s var(--ease);}
 .brand-plate:hover img{transform:scale(1.04) rotate(-1deg);}
 
 /* historia */
@@ -283,7 +293,7 @@ footer{background:var(--charcoal);color:#c9cdd0;padding-top:64px;}
 .socials a{width:36px;height:36px;border:1px solid #333c40;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:.25s var(--ease);}
 .socials a:hover{border-color:var(--orange);color:var(--orange);transform:translateY(-3px);}
 .socials svg{width:16px;height:16px;}
-.foot-bottom{border-top:1px solid #262d30;padding:20px 0;text-align:center;font-size:12.5px;color:#6b7479;}
+.foot-bottom{border-top:1px solid #262d30;padding:20px 0;text-align:center;font-size:12.5px;color:#788185;}
 
 .floaters{position:fixed;right:22px;bottom:22px;display:flex;flex-direction:column;gap:12px;z-index:60;}
 .fab{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 22px rgba(0,0,0,.28);transition:transform .25s var(--ease);position:relative;}
@@ -292,6 +302,9 @@ footer{background:var(--charcoal);color:#c9cdd0;padding-top:64px;}
 .fab-wa{background:#25D366;}
 .fab-wa::after{content:'';position:absolute;inset:0;border-radius:50%;background:#25D366;opacity:.5;animation:pulse 2s infinite;}
 .fab-call{background:var(--orange);}
+.fab-top{background:var(--steel-navy-2);border:1px solid var(--line-2);box-shadow:0 8px 22px rgba(0,0,0,.4);opacity:0;pointer-events:none;transform:translateY(14px);transition:opacity .35s var(--ease),transform .35s var(--ease),background .3s;}
+.fab-top.show{opacity:1;pointer-events:auto;transform:translateY(0);}
+.fab-top:hover{background:var(--orange);border-color:var(--orange);}
 @keyframes pulse{0%{transform:scale(1);opacity:.5}100%{transform:scale(1.7);opacity:0}}
 
 @media(max-width:1100px){
