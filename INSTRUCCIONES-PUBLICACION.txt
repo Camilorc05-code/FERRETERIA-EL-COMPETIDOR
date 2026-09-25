@@ -29,6 +29,7 @@ Subir a la carpeta raiz publica del hosting (htdocs o public_html):
 - Archivos de raiz:
     robots.txt
     sitemap.xml
+    manifest.webmanifest
 
 NO SUBIR (NO son necesarios):
     .git/
@@ -37,6 +38,7 @@ NO SUBIR (NO son necesarios):
     package.json
     package-lock.json
     README.md (opcional)
+    INSTRUCCIONES-PUBLICACION.txt (opcional)
 
 ----------------------------------------------------------
 2. MUY IMPORTANTE: RAIZ DEL DOMINIO
@@ -69,15 +71,22 @@ Despues de publicar, comprobar que:
 - El mapa de contacto se muestre
 - Los botones de WhatsApp y llamar funcionen
 - https://ferreteriaelcompetidorpza.com/robots.txt responda 200
+- https://ferreteriaelcompetidorpza.com/manifest.webmanifest responda 200
+- https://ferreteriaelcompetidorpza.com/assets/img/og-image.png responda 200
+  (es la imagen que se ve al compartir el link en WhatsApp/Facebook)
 
 ----------------------------------------------------------
 5. NOTAS EXTRA
 ----------------------------------------------------------
 - El sitio es responsive: se ve bien en movil y en escritorio.
+- Se puede instalar como app desde el movil (manifest.webmanifest).
 - La pagina ya esta optimizada para SEO local.
   Recomendable despues de subir:
     + Registrar en Google Search Console (enviar sitemap.xml)
     + Crear Google Business Profile del local
+
+- Si el hosting usa una pagina de error propia,(configurarla para que
+  muestre 404.html al pulsar una URL inexistente.
 
 Si hay cualquier duda, contactar al responsable del sitio.
 ==========================================================
