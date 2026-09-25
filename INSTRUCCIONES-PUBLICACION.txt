@@ -1,83 +1,83 @@
 ==========================================================
 INSTRUCCIONES DE PUBLICACION
-Sitio web: Ferreteria El Competidor
-Dominio: https://ferreteriaelcompetidorpza.com
+Ferreteria El Competidor
+Dominio: ferreteriaelcompetidorpza.com
 Hosting: Latinoamerica Hosting
 ==========================================================
 
-El sitio esta completo y listo para publicar. Todo es ESTATICO
-(no necesita base de datos ni backend). Solo hay que subir los
-archivos al hosting y apuntar el dominio.
+El sitio ya esta terminado. Es puro HTML, CSS y JavaScript,
+no hay base de datos ni nada que instalar en el servidor.
+El trabajo es subir los archivos y apuntar el dominio.
 
 ----------------------------------------------------------
 1. QUE SUBIR
 ----------------------------------------------------------
-Subir a la carpeta raiz publica del hosting (htdocs o public_html):
+Todo esto va en la carpeta publica del hosting
+(public_html o htdocs, segun el panel):
 
-- Las 5 paginas HTML:
-    index.html
-    catalogo.html
-    nosotros.html
-    proyectos.html
-    404.html
+  index.html
+  catalogo.html
+  nosotros.html
+  proyectos.html
+  404.html
+  robots.txt
+  sitemap.xml
+  css/     (carpeta completa)
+  js/      (carpeta completa)
+  assets/  (carpeta completa, ahi van todas las imagenes)
 
-- Las carpetas completas:
-    css/            (estilos)
-    js/             (logica del sitio)
-    assets/         (todas las imagenes e iconos)
-
-- Archivos de raiz:
-    robots.txt
-    sitemap.xml
-
-NO SUBIR (NO son necesarios):
-    .git/
-    node_modules/
-    .gitignore
-    package.json
-    package-lock.json
-    README.md (opcional)
+Lo que hay en la carpeta .git no se sube, no sirve para nada.
 
 ----------------------------------------------------------
-2. MUY IMPORTANTE: RAIZ DEL DOMINIO
+2. IMPORTANTE: QUE QUEDE EN LA RAIZ
 ----------------------------------------------------------
-El sitio debe quedar en la RAIZ del dominio, NO en una subcarpeta.
+El sitio tiene que quedar en la raiz del dominio, no dentro de
+una subcarpeta.
 
-Correcto:   https://ferreteriaelcompetidorpza.com/
-Incorrecto: https://ferreteriaelcompetidorpza.com/ferreteria/
+  Si:  ferreteriaelcompetidorpza.com/
+  No:  ferreteriaelcompetidorpza.com/ferreteria/
 
-Las URLs de SEO (canonical, Open Graph, JSON-LD, sitemap) ya
-apuntan a la raiz del dominio. Si el sitio se sube a una
-subcarpeta, el SEO quedaria incorrecto.
-
-----------------------------------------------------------
-3. CONFIGURAR EL DOMINIO
-----------------------------------------------------------
-- Apuntar el dominio ferreteriaelcompetidorpza.com al hosting
-  (registro A con la IP del hosting, o CNAME si aplica).
-- Activar SSL/HTTPS (certificado) para que el sitio cargue
-  como https://ferreteriaelcompetidorpza.com
+Esto es importante porque por dentro del codigo ya estan
+escritas las direcciones del sitio apuntando a la raiz
+(las etiquetas canonical, las de Facebook/WhatsApp, el
+sitemap). Si se sube a una subcarpeta esas direcciones dejan
+de servir y el sitio no aparece bien en Google ni al compartir
+el link.
 
 ----------------------------------------------------------
-4. VERIFICAR QUE QUEDO BIEN
+3. DOMINIO Y SSL
 ----------------------------------------------------------
-Despues de publicar, comprobar que:
+Dos cosas se hacen desde el panel de Latinoamerica Hosting:
 
-- https://ferreteriaelcompetidorpza.com/ cargue la portada
-- Las 5 paginas naveguen bien (menu y enlaces)
-- Las imagenes se carguen (catalogo, proyectos, logos, carousel)
-- El mapa de contacto se muestre
-- Los botones de WhatsApp y llamar funcionen
-- https://ferreteriaelcompetidorpza.com/robots.txt responda 200
+  - Apuntar ferreteriaelcompetidorpza.com al hosting
+    (registro A con la IP del hosting, o CNAME si el panel
+    lo pide asi).
+  - Activar el certificado SSL para que el sitio entre por
+    https y no por http.
+
+Con SSL activado, conviene dejar todo redirigido a https.
 
 ----------------------------------------------------------
-5. NOTAS EXTRA
+4. QUE REVISAR CUANDO YA ESTE ARRIBA
 ----------------------------------------------------------
-- El sitio es responsive: se ve bien en movil y en escritorio.
-- La pagina ya esta optimizada para SEO local.
-  Recomendable despues de subir:
-    + Registrar en Google Search Console (enviar sitemap.xml)
-    + Crear Google Business Profile del local
+Cargar el sitio y mirar:
 
-Si hay cualquier duda, contactar al responsable del sitio.
+  - Que abra la portada
+  - Que el menu de arriba tenga todas las paginas
+  - Que las imagenes salgan (catalogo, proyectos, logos)
+  - Que aparezca el mapa en la seccion de contacto
+  - Que el boton de WhatsApp abra el chat con el numero
+  - Que el boton de llamar marque al celular
+  - Que se vea bien en un celular, no solo en computador
+
+Abrir en el celular el link de la portada y compartirlo por
+WhatsApp. Tiene que verse la imagen con el logo de la
+ferreteria. Si sale un cuadrado vacio o feo, es que la imagen
+no subio.
+
+Por ultimo, entrar a ferreteriaelcompetidorpza.com/robots.txt
+y confirmar que sale un texto y no un error.
+
+==========================================================
+Cualquier duda, avisar.
 ==========================================================
