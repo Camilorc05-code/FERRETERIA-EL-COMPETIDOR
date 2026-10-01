@@ -1,0 +1,40 @@
+# Ferretería El Competidor
+# Configuración de servidor (Apache / cPanel)
+
+# --- Página de error 404 personalizada ---
+ErrorDocument 404 /404.html
+
+# --- Página por defecto ---
+DirectoryIndex index.html
+
+# --- Una sola versión del dominio: todo va con www ---
+# El sitio se publica en https://www.ferreteriaelcompetidorpza.com y todas
+# las URLs del código apuntan ahí. Si alguien entra sin www, se redirige.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^(.*)$ https://www.ferreteriaelcompetidorpza.com/$1 [R=301,L]
+  RewriteCond %{HTTP_HOST} !^www\.ferreteriaelcompetidorpza\.com$ [NC]
+  RewriteRule ^(.*)$ https://www.ferreteriaelcompetidorpza.com/$1 [R=301,L]
+</IfModule>
+
+# --- Compresión (reduce el peso que descarga el visitante) ---
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
+  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# --- Caché del navegador en imágenes, CSS y JS ---
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/webp                "access plus 1 year"
+  ExpiresByType image/png                 "access plus 1 year"
+  ExpiresByType image/jpeg                "access plus 1 year"
+  ExpiresByType image/x-icon              "access plus 1 year"
+  ExpiresByType text/css                  "access plus 1 year"
+  ExpiresByType application/javascript    "access plus 1 year"
+</IfModule>
+
+# --- Codificación por defecto ---
+AddDefaultCharset UTF-8

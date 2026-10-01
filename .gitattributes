@@ -1,0 +1,6 @@
+# Archivos que no forman parte del paquete de publicacion.
+# Se siguen versionando en el repositorio, pero `git archive` los omite,
+# de modo que no llegan a la raiz publica del hosting.
+/README.md          export-ignore
+/.gitignore         export-ignore
+/.gitattributes     export-ignore
