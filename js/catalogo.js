@@ -99,14 +99,14 @@
 
   function filtrar(){
     const q = norm(query);
-    /* la categoría manda: si hay texto de búsqueda activo se combina con ella,
-     así el chip y lo que se ve nunca se contradicen */
+    /* la búsqueda manda sobre todo el catálogo: si hay texto, se ignoran los
+     filtros de categoría para encontrar el producto esté donde esté */
     let lista = PRODUCTOS.filter(p=>{
-      if(categoria && p.categoria !== categoria) return false;
       if(q){
         const hay = norm(p.nombre + ' ' + p.categoria);
-        if(!hay.includes(q)) return false;
+        return hay.includes(q);
       }
+      if(categoria && p.categoria !== categoria) return false;
       return true;
     });
 
@@ -278,6 +278,8 @@
   inputBuscar.addEventListener('input', ()=>{
     query = inputBuscar.value;
     targetIndex = null;
+    /* al buscar salimos de la categoría para que el chip no contradiga los resultados */
+    if(query && categoria) setCategoria('');
     mostrarSugerencias();
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(()=>{ render(false); verResultados(); }, 260);
@@ -319,8 +321,12 @@
   });
 
   selectCategoria.addEventListener('change', ()=>{
-    setCategoria(selectCategoria.value);
+    /* elegir categoría deja la búsqueda de lado, así no se muestran resultados cruzados */
+    query = '';
+    inputBuscar.value = '';
     targetIndex = null;
+    suggestBox.hidden = true;
+    setCategoria(selectCategoria.value);
     render(false);
   });
 
