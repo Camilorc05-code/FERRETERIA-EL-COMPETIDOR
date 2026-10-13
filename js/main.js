@@ -403,23 +403,30 @@ if(hero && window.matchMedia('(hover:hover)').matches){
    navegador como respaldo (así funciona para todos: Gmail, Outlook o app del celular) */
 (function(){
   document.querySelectorAll('a[href^="mailto:"]').forEach(a=>{
-    a.addEventListener('click', ()=>{
+    a.addEventListener('click', (e)=>{
+      if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||e.button!==0) return;
       const correo = (a.getAttribute('href') || '').slice(7).split('?')[0];
       if(!correo) return;
+      e.preventDefault();
       const gmail = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(correo);
-      let seAbrio = false;
-      const marcar = ()=>{ seAbrio = true; };
-      window.addEventListener('blur', marcar, {once:true});
-      document.addEventListener('visibilitychange', ()=>{ if(document.hidden) seAbrio = true; }, {once:true});
-      /* reservamos la pestaña dentro del gesto del usuario para que el navegador no
-         la bloquee; si se abrió una app de correo la cerramos, y si no, cargamos
-         Gmail en esa pestaña nueva */
+      /* abrimos la pestaña nueva aquí mismo (dentro del clic) para que el navegador
+         no la bloquee. Desde esa pestaña intentamos la app de correo del usuario y,
+         si no se abre ninguna, cargamos Gmail. Así la página actual no se pierde. */
       const win = window.open('', '_blank');
-      setTimeout(()=>{
-        if(seAbrio){ if(win) win.close(); return; }
-        if(win) win.location.href = gmail;
-        else if(!window.open(gmail, '_blank')) window.location.href = gmail;
-      }, 700);
+      if(!win){ window.location.href = 'mailto:' + correo; return; }
+      const html = '<!doctype html><html lang="es"><head><meta charset="utf-8">'
+        + '<title>Redactar correo — Ferretería El Competidor</title></head><body><script>'
+        + 'try{location.href="mailto:' + correo + '";}catch(e){}'
+        + 'setTimeout(function(){ if(!document.hidden){ location.href=' + JSON.stringify(gmail) + '; } },700);'
+        + '<\/script></body></html>';
+      try{
+        win.document.open();
+        win.document.write(html);
+        win.document.close();
+      }catch(err){
+        win.location.href = 'mailto:' + correo;
+        setTimeout(()=>{ try{ win.location.href = gmail; }catch(e2){} }, 700);
+      }
     });
   });
 })();
