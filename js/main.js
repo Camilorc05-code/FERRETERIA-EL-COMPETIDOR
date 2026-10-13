@@ -398,4 +398,24 @@ if(hero && window.matchMedia('(hover:hover)').matches){
   go(0); resume();
 })();
 
+/* los correos: mailto abre la app de correo del usuario. Si el equipo no tiene
+   ninguna configurada, el clic no hace nada; en ese caso abrimos Gmail en el
+   navegador como respaldo (así funciona para todos: Gmail, Outlook o app del celular) */
+(function(){
+  document.querySelectorAll('a[href^="mailto:"]').forEach(a=>{
+    a.addEventListener('click', ()=>{
+      const correo = (a.getAttribute('href') || '').slice(7).split('?')[0];
+      if(!correo) return;
+      let seAbrio = false;
+      const marcar = ()=>{ seAbrio = true; };
+      window.addEventListener('blur', marcar, {once:true});
+      document.addEventListener('visibilitychange', ()=>{ if(document.hidden) seAbrio = true; }, {once:true});
+      setTimeout(()=>{
+        if(seAbrio) return;
+        window.location.href = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(correo);
+      }, 700);
+    });
+  });
+})();
+
 
