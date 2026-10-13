@@ -406,13 +406,19 @@ if(hero && window.matchMedia('(hover:hover)').matches){
     a.addEventListener('click', ()=>{
       const correo = (a.getAttribute('href') || '').slice(7).split('?')[0];
       if(!correo) return;
+      const gmail = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(correo);
       let seAbrio = false;
       const marcar = ()=>{ seAbrio = true; };
       window.addEventListener('blur', marcar, {once:true});
       document.addEventListener('visibilitychange', ()=>{ if(document.hidden) seAbrio = true; }, {once:true});
+      /* reservamos la pestaña dentro del gesto del usuario para que el navegador no
+         la bloquee; si se abrió una app de correo la cerramos, y si no, cargamos
+         Gmail en esa pestaña nueva */
+      const win = window.open('', '_blank');
       setTimeout(()=>{
-        if(seAbrio) return;
-        window.location.href = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(correo);
+        if(seAbrio){ if(win) win.close(); return; }
+        if(win) win.location.href = gmail;
+        else if(!window.open(gmail, '_blank')) window.location.href = gmail;
       }, 700);
     });
   });
