@@ -36,6 +36,34 @@
       });
       return;
     }
+    /* el botón "Visítanos" baja un poco más que el borde de la sección para
+       que quede a la vista toda la información de contacto, no solo el título */
+    if(href === '#contacto'){
+      a.addEventListener('click', (e)=>{
+        if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||e.button!==0) return;
+        const sec = document.getElementById('contacto');
+        if(!sec) return;
+        e.preventDefault();
+        const cab = document.getElementById('site-header');
+        const cabH = cab ? cab.offsetHeight : 64;
+        const secTop = sec.getBoundingClientRect().top + window.scrollY;
+        /* tomamos el punto más bajo del contenido (título, filas, botones o mapa)
+           para asegurarnos de que todo quede dentro de la pantalla */
+        let contenidoFin = sec.querySelector('.contact-grid').getBoundingClientRect().bottom + window.scrollY;
+        sec.querySelectorAll('h2, .info-row, .hero-actions, .map-box').forEach(el=>{
+          const b = el.getBoundingClientRect().bottom + window.scrollY;
+          if(b > contenidoFin) contenidoFin = b;
+        });
+        const yAncla = secTop - cabH;
+        /* si el bloque es más alto que la pantalla, bajamos hasta mostrar el final */
+        const yFinal = contenidoFin + 24 - window.innerHeight;
+        const maxY = document.documentElement.scrollHeight - window.innerHeight;
+        const y = Math.min(Math.max(yAncla, yFinal), maxY);
+        window.scrollTo({top: Math.max(0, y), behavior:'smooth'});
+        try{ history.replaceState(null, '', '#contacto'); }catch(err){}
+      });
+      return;
+    }
     if(href.startsWith('#')) return;
     if(!isInternal(href)) return;
     a.addEventListener('click', (e)=>{
