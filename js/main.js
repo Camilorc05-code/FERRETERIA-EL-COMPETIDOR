@@ -411,13 +411,15 @@ if(hero && window.matchMedia('(hover:hover)').matches){
 
 /* el correo: se deja el mailto (abre la app del usuario). Si no hay ninguna
    app de correo, al cabo de un momento la página no pierde el foco; en ese
-   caso abrimos Gmail web como respaldo. */
+   caso abrimos Gmail web en una pestaña nueva. La pestaña se abre dentro del
+   clic para que el navegador no la bloquee, y se cierra si la app sí se abre. */
 (function(){
   document.querySelectorAll('a[href^="mailto:"]').forEach(a=>{
     a.addEventListener('click', (e)=>{
       if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||e.button!==0) return;
       const correo = (a.getAttribute('href') || '').slice(7).split('?')[0];
       if(!correo) return;
+      const win = window.open('', '_blank');
       let abrioApp = false;
       const marca = ()=>{ abrioApp = true; };
       window.addEventListener('blur', marca, {once:true});
@@ -425,8 +427,13 @@ if(hero && window.matchMedia('(hover:hover)').matches){
       setTimeout(()=>{
         window.removeEventListener('blur', marca);
         document.removeEventListener('visibilitychange', marca);
-        if(!abrioApp){
-          location.href = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(correo);
+        const gmail = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(correo);
+        if(abrioApp){
+          if(win && !win.closed){ try{ win.close(); }catch(err){} }
+        } else if(win && !win.closed){
+          win.location.href = gmail;
+        } else {
+          location.href = gmail;
         }
       }, 1200);
     });
