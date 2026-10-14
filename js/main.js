@@ -1,3 +1,5 @@
+window.__revealReady = true;
+
 /* fundido al cambiar de página: se tapa con el overlay y se navega debajo */
 (function(){
   const pt = document.getElementById('pageTrans');
@@ -343,14 +345,6 @@ if(hero && window.matchMedia('(hover:hover)').matches){
   const prev = document.getElementById('cat-prev');
   const next = document.getElementById('cat-next');
 
-  slides.length && CATEGORIAS.forEach((_,i)=>{
-    const d = document.createElement('button');
-    d.setAttribute('aria-label','Ir a '+(i+1));
-    d.addEventListener('click', ()=>{ go(i); pause(); });
-    dotsEl.appendChild(d);
-  });
-  const dots = dotsEl.children;
-
   let index = 0, timer = null;
   const slideStep = ()=>{
     const first = slides[0];
@@ -367,8 +361,21 @@ if(hero && window.matchMedia('(hover:hover)').matches){
   function go(i){
     index = Math.max(0, Math.min(i, slides.length - visible()));
     track.style.transform = 'translateX(' + (-index * slideStep()) + 'px)';
-    Array.from(dots).forEach((d,k)=> d.classList.toggle('active', k===index));
+    Array.from(dotsEl.children).forEach((d,k)=> d.classList.toggle('active', k===index));
   }
+  /* un punto por posición alcanzable (no por diapositiva): si no, los últimos
+     puntos nunca se iluminaban porque el índice se topa antes del final */
+  function buildDots(){
+    const pages = Math.max(1, slides.length - visible() + 1);
+    dotsEl.innerHTML = '';
+    for(let i=0;i<pages;i++){
+      const d = document.createElement('button');
+      d.setAttribute('aria-label','Ir a '+(i+1));
+      d.addEventListener('click', ()=>{ go(i); pause(); resume(); });
+      dotsEl.appendChild(d);
+    }
+  }
+  buildDots();
   function play(){ timer = setInterval(()=>{ go(index + 1); if(index >= slides.length - visible()) go(0); }, 3200); }
   function pause(){ clearInterval(timer); }
   function resume(){ pause(); play(); }
@@ -377,7 +384,7 @@ if(hero && window.matchMedia('(hover:hover)').matches){
   next.addEventListener('click', ()=>{ go(index + 1); pause(); resume(); });
   track.addEventListener('mouseenter', pause);
   track.addEventListener('mouseleave', resume);
-  window.addEventListener('resize', ()=> go(index));
+  window.addEventListener('resize', ()=>{ buildDots(); go(index); });
 
   dotsEl.addEventListener('click', (e)=>{ if(e.target.tagName==='BUTTON'){ resume(); } });
 

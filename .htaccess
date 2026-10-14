@@ -12,7 +12,13 @@ DirectoryIndex index.html
 # las URLs del código apuntan ahí. Si alguien entra sin www, se redirige.
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  # Detrás de Cloudflare (u otro proxy) la conexión al origen llega por HTTP
+  # aunque el visitante use HTTPS. Si solo miramos %{HTTPS} el origen cree que
+  # falta el HTTPS, redirige... y Cloudflare vuelve a pedir por HTTP: bucle.
+  # Por eso miramos tambien X-Forwarded-Proto y CF-Visitor.
   RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteCond %{HTTP:CF-Visitor} !https
   RewriteRule ^(.*)$ https://www.ferreteriaelcompetidorpza.com/$1 [R=301,L]
   RewriteCond %{HTTP_HOST} !^www\.ferreteriaelcompetidorpza\.com$ [NC]
   RewriteRule ^(.*)$ https://www.ferreteriaelcompetidorpza.com/$1 [R=301,L]

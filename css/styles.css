@@ -63,6 +63,23 @@ section{position:relative;}
 .reveal-stagger.in > *:nth-child(11){transition-delay:.52s} .reveal-stagger.in > *:nth-child(12){transition-delay:.56s}
 .reveal-stagger.in > *:nth-child(13){transition-delay:.60s}
 
+/* Sin JavaScript (o si main.js no cargó) las clases .in nunca se añaden y
+   estos bloques quedarían invisibles: los mostramos igual. */
+html:not(.js) .reveal,
+html:not(.js) .reveal-scale,
+html:not(.js) .reveal-stagger > *,
+html:not(.js) .section-head .eyebrow,
+html:not(.js) .section-head h2,
+html:not(.js) .section-head p,
+html.reveal-fallback .reveal,
+html.reveal-fallback .reveal-scale,
+html.reveal-fallback .reveal-stagger > *,
+html.reveal-fallback .section-head .eyebrow,
+html.reveal-fallback .section-head h2,
+html.reveal-fallback .section-head p{opacity:1!important;transform:none!important;filter:none!important;}
+html:not(.js) .section-head h2::after,
+html.reveal-fallback .section-head h2::after{transform:scaleX(1)!important;}
+
 .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--orange);display:flex;align-items:center;gap:10px;margin-bottom:14px;}
 .eyebrow::before{content:'';width:26px;height:2px;background:var(--orange);display:inline-block;}
 
