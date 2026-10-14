@@ -409,5 +409,30 @@ if(hero && window.matchMedia('(hover:hover)').matches){
   go(0); resume();
 })();
 
+/* el correo: se deja el mailto (abre la app del usuario). Si no hay ninguna
+   app de correo, al cabo de un momento la página no pierde el foco; en ese
+   caso abrimos Gmail web como respaldo. */
+(function(){
+  document.querySelectorAll('a[href^="mailto:"]').forEach(a=>{
+    a.addEventListener('click', (e)=>{
+      if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||e.button!==0) return;
+      const correo = (a.getAttribute('href') || '').slice(7).split('?')[0];
+      if(!correo) return;
+      let abrioApp = false;
+      const marca = ()=>{ abrioApp = true; };
+      window.addEventListener('blur', marca, {once:true});
+      document.addEventListener('visibilitychange', marca, {once:true});
+      setTimeout(()=>{
+        window.removeEventListener('blur', marca);
+        document.removeEventListener('visibilitychange', marca);
+        if(!abrioApp){
+          location.href = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(correo);
+        }
+      }, 1200);
+    });
+  });
+})();
+
+
 
 
