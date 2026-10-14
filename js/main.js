@@ -3,6 +3,10 @@
   const pt = document.getElementById('pageTrans');
   if(!pt) return;
 
+  window.addEventListener('pageshow', (e)=>{
+    if(e.persisted) document.body.classList.remove('pt-out');
+  });
+
   /* si ya estamos saliendo, no repetimos la navegación */
   function go(href){
     if(document.body.classList.contains('pt-out')) return;
