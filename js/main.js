@@ -409,31 +409,5 @@ if(hero && window.matchMedia('(hover:hover)').matches){
   go(0); resume();
 })();
 
-/* el correo: abrimos la app de correo del usuario con un iframe oculto, de modo
-   que la página actual nunca se abandona. Si no hay ninguna app, la ventana
-   conserva el foco; en ese caso abrimos Gmail web en una pestaña nueva. */
-(function(){
-  document.querySelectorAll('a[href^="mailto:"]').forEach(a=>{
-    a.addEventListener('click', (e)=>{
-      if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||e.button!==0) return;
-      const correo = (a.getAttribute('href') || '').slice(7).split('?')[0];
-      if(!correo) return;
-      e.preventDefault();
-      const ifr = document.createElement('iframe');
-      ifr.style.display = 'none';
-      ifr.src = 'mailto:' + correo;
-      document.body.appendChild(ifr);
-      setTimeout(()=>{ try{ ifr.remove(); }catch(err){} }, 3000);
-      setTimeout(()=>{
-        if(document.hasFocus()) return;
-        const gmail = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(correo);
-        const win = window.open(gmail, '_blank');
-        if(!win) location.href = gmail;
-      }, 1200);
-    });
-  });
-})();
-
-
 
 
