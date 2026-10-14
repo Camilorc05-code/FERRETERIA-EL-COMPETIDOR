@@ -410,9 +410,8 @@ if(hero && window.matchMedia('(hover:hover)').matches){
 })();
 
 /* el correo: abrimos la app de correo del usuario con un iframe oculto, de modo
-   que la página actual nunca se abandona. Si no hay ninguna app, la pestaña no
-   pierde el foco y cargamos Gmail web en una pestaña nueva (abierta dentro del
-   clic para que el navegador no la bloquee; se cierra si la app sí se abre). */
+   que la página actual nunca se abandona. Si no hay ninguna app, la ventana
+   conserva el foco; en ese caso abrimos Gmail web en una pestaña nueva. */
 (function(){
   document.querySelectorAll('a[href^="mailto:"]').forEach(a=>{
     a.addEventListener('click', (e)=>{
@@ -425,22 +424,11 @@ if(hero && window.matchMedia('(hover:hover)').matches){
       ifr.src = 'mailto:' + correo;
       document.body.appendChild(ifr);
       setTimeout(()=>{ try{ ifr.remove(); }catch(err){} }, 3000);
-      const win = window.open('', '_blank');
-      let abrioApp = false;
-      const marca = ()=>{ abrioApp = true; };
-      window.addEventListener('blur', marca, {once:true});
-      document.addEventListener('visibilitychange', marca, {once:true});
       setTimeout(()=>{
-        window.removeEventListener('blur', marca);
-        document.removeEventListener('visibilitychange', marca);
+        if(document.hasFocus()) return;
         const gmail = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(correo);
-        if(abrioApp){
-          if(win && !win.closed){ try{ win.close(); }catch(err){} }
-        } else if(win && !win.closed){
-          win.location.href = gmail;
-        } else {
-          window.open(gmail, '_blank');
-        }
+        const win = window.open(gmail, '_blank');
+        if(!win) location.href = gmail;
       }, 1200);
     });
   });
